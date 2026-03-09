@@ -1,0 +1,60 @@
+# Datasets (too large for git)
+datasets/**/*.zip
+datasets/**/*.tar.gz
+datasets/**/*.rar
+datasets/**/*.7z
+datasets/**/*.mp4
+datasets/**/*.avi
+datasets/**/*.wav
+datasets/**/*.mp3
+datasets/**/*.jpg
+datasets/**/*.jpeg
+datasets/**/*.png
+datasets/**/*.bmp
+datasets/**/*.csv
+datasets/**/*.npy
+datasets/**/*.npz
+datasets/**/*.h5
+datasets/**/*.hdf5
+datasets/**/*.pkl
+datasets/**/*.pt
+datasets/**/*.pth
+datasets/**/*.safetensors
+datasets/**/*.ckpt
+datasets/**/*.bin
+
+# Keep directory structure
+!datasets/**/.gitkeep
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.eggs/
+*.egg
+
+# Virtual environments
+venv/
+.env/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Model outputs
+outputs/
+logs/
+runs/
+wandb/
