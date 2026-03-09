@@ -1,0 +1,16 @@
+# Video Face Expression Preprocessing
+opencv-python>=4.8.0
+numpy>=1.24.0
+pandas>=2.0.0
+scikit-learn>=1.3.0
+pyyaml>=6.0
+tqdm>=4.65.0
+mediapipe>=0.10.0
+
+# Optional: alternative face detectors
+# dlib>=19.24.0
+# retinaface-pytorch>=0.0.8
+
+# Audio preprocessing (from audio pipeline)
+# librosa>=0.10.0
+# soundfile>=0.12.0

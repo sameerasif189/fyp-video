@@ -1,0 +1,150 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# Video Face Expression Recognition - Preprocessing Config
+# Adaptive Psychological Horror Gaming FYP
+# ─────────────────────────────────────────────────────────────────────────────
+# Hardware: RTX 5060 (8GB VRAM), 16GB RAM, i7-12700H
+# ─────────────────────────────────────────────────────────────────────────────
+
+datasets:
+  base_dir: "datasets"
+  raw_dir: "datasets/facial_expression"
+  processed_dir: "datasets/processed_video"
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Video Processing Settings
+# ─────────────────────────────────────────────────────────────────────────────
+video:
+  # Frame extraction
+  num_frames: 16            # frames sampled per clip (temporal depth)
+  frame_size: 224           # resize frames to 224x224 (standard for ResNet/ViT)
+  fps: null                 # null = use dataset's native fps
+  sampling_strategy: "uniform"  # uniform | random | center
+
+  # Face detection & alignment
+  face_detection: true
+  face_detector: "mediapipe"    # mediapipe | opencv | dlib | retinaface
+  face_margin: 0.3              # expand crop box by 30% around detected face
+  align_faces: true             # align faces using eye landmarks
+  min_face_size: 48             # skip frames where face < 48px
+
+  # Normalization
+  normalize: true
+  mean: [0.485, 0.456, 0.406]  # ImageNet mean
+  std: [0.229, 0.224, 0.225]   # ImageNet std
+
+  # Feature extraction (optional - extract CNN features instead of raw frames)
+  feature_type: "frames"        # frames | embeddings
+  # If embeddings: use a pre-trained backbone to extract features
+  embedding_model: "resnet18"   # resnet18 | resnet50 | efficientnet_b0
+  embedding_dim: 512
+
+  # Data augmentation (applied during training, not preprocessing)
+  augmentation:
+    horizontal_flip: true
+    random_crop: true
+    color_jitter: 0.2
+    random_rotation: 10       # degrees
+    temporal_jitter: true     # randomly shift frame sampling window
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Classes - Map dataset emotions to game stress levels
+# ─────────────────────────────────────────────────────────────────────────────
+classes:
+  num_classes: 4
+  names: ["calm", "stressed", "fearful", "panic"]
+  # Game stress level mapping:
+  #   calm     -> stress 0-1 (neutral, calm, happy)
+  #   stressed -> stress 2-3 (sad, angry, disgust)
+  #   fearful  -> stress 3-4 (fear, anxiety)
+  #   panic    -> stress 5   (extreme fear, surprise + fear)
+
+  # ── DFEW ──────────────────────────────────────────────────────────────────
+  # Labels: 0=Happy, 1=Sad, 2=Neutral, 3=Angry, 4=Surprise, 5=Disgust, 6=Fear
+  dfew_mapping:
+    "0": "calm"       # Happy
+    "1": "stressed"   # Sad
+    "2": "calm"       # Neutral
+    "3": "stressed"   # Angry
+    "4": "panic"      # Surprise (startle response)
+    "5": "stressed"   # Disgust
+    "6": "fearful"    # Fear
+
+  # ── FERV39k ───────────────────────────────────────────────────────────────
+  # Labels: 0=Angry, 1=Disgust, 2=Fear, 3=Happy, 4=Neutral, 5=Sad, 6=Surprise
+  ferv39k_mapping:
+    "0": "stressed"   # Angry
+    "1": "stressed"   # Disgust
+    "2": "fearful"    # Fear
+    "3": "calm"       # Happy
+    "4": "calm"       # Neutral
+    "5": "stressed"   # Sad
+    "6": "panic"      # Surprise
+
+  # ── FER2013 ───────────────────────────────────────────────────────────────
+  # Labels: 0=Angry, 1=Disgust, 2=Fear, 3=Happy, 4=Sad, 5=Surprise, 6=Neutral
+  fer2013_mapping:
+    "0": "stressed"   # Angry
+    "1": "stressed"   # Disgust
+    "2": "fearful"    # Fear
+    "3": "calm"       # Happy
+    "4": "stressed"   # Sad
+    "5": "panic"      # Surprise
+    "6": "calm"       # Neutral
+
+  # ── RAF-DB ────────────────────────────────────────────────────────────────
+  # Labels: 1=Surprise, 2=Fear, 3=Disgust, 4=Happy, 5=Sad, 6=Angry, 7=Neutral
+  rafdb_mapping:
+    "1": "panic"      # Surprise
+    "2": "fearful"    # Fear
+    "3": "stressed"   # Disgust
+    "4": "calm"       # Happy
+    "5": "stressed"   # Sad
+    "6": "stressed"   # Angry
+    "7": "calm"       # Neutral
+
+  # ── CK+ (Extended Cohn-Kanade) ────────────────────────────────────────────
+  # Labels: 0=Neutral, 1=Anger, 2=Contempt, 3=Disgust, 4=Fear, 5=Happy, 6=Sad, 7=Surprise
+  ckplus_mapping:
+    "0": "calm"       # Neutral
+    "1": "stressed"   # Anger
+    "2": "stressed"   # Contempt
+    "3": "stressed"   # Disgust
+    "4": "fearful"    # Fear
+    "5": "calm"       # Happy
+    "6": "stressed"   # Sad
+    "7": "panic"      # Surprise
+
+  # ── Aff-Wild2 ─────────────────────────────────────────────────────────────
+  # Labels: 0=Neutral, 1=Anger, 2=Disgust, 3=Fear, 4=Happiness, 5=Sadness, 6=Surprise
+  affwild2_mapping:
+    "0": "calm"       # Neutral
+    "1": "stressed"   # Anger
+    "2": "stressed"   # Disgust
+    "3": "fearful"    # Fear
+    "4": "calm"       # Happiness
+    "5": "stressed"   # Sadness
+    "6": "panic"      # Surprise
+
+  # ── RAVDESS Video ─────────────────────────────────────────────────────────
+  # Emotion codes: 01=neutral, 02=calm, 03=happy, 04=sad,
+  #                05=angry, 06=fearful, 07=disgust, 08=surprised
+  ravdess_video_mapping:
+    "01": "calm"      # Neutral
+    "02": "calm"      # Calm
+    "03": "calm"      # Happy
+    "04": "stressed"  # Sad
+    "05": "stressed"  # Angry
+    "06": "fearful"   # Fearful
+    "07": "stressed"  # Disgust
+    "08": "panic"     # Surprised
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Training Settings
+# ─────────────────────────────────────────────────────────────────────────────
+training:
+  train_ratio: 0.7
+  val_ratio: 0.15
+  test_ratio: 0.15
+  batch_size: 8             # conservative for 8GB VRAM with video
+  num_workers: 4
+  seed: 42
