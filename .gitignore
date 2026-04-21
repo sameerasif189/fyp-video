@@ -65,3 +65,14 @@ outputs/
 logs/
 runs/
 wandb/
+
+# Generated assets (large files)
+assets/textures/cached/*.png
+assets/entities/skins/*.png
+assets/audio/cached/*.wav
+!assets/**/.gitkeep
+
+# SD / LoRA model weights
+models/
+*.safetensors
+*.ckpt
