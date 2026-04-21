@@ -11,12 +11,6 @@ mediapipe>=0.10.0
 # dlib>=19.24.0
 # retinaface-pytorch>=0.0.8
 
-# Fusion + Generative Content Pipeline
-torch>=2.0.0
-torchvision>=0.15.0
-diffusers>=0.25.0
-transformers>=4.36.0
-accelerate>=0.25.0
-soundfile>=0.12.0
-sounddevice>=0.4.6
-Pillow>=10.0.0
+# Audio preprocessing (from audio pipeline)
+# librosa>=0.10.0
+# soundfile>=0.12.0
