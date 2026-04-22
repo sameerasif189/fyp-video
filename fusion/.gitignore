@@ -1,0 +1,41 @@
+# Generated assets (large files)
+assets/textures/cached/*.png
+assets/entities/skins/*.png
+assets/audio/cached/*.wav
+!assets/**/.gitkeep
+
+# SD / LoRA model weights
+models/
+*.safetensors
+*.ckpt
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+
+# Virtual environments
+venv/
+.env/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Training outputs
+outputs/
+logs/
+runs/
+wandb/
