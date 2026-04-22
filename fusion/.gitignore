@@ -1,5 +1,6 @@
 # Generated assets (large files)
 assets/textures/cached/*.png
+assets/textures/cached/camera_fx_demo/
 assets/entities/skins/*.png
 assets/audio/cached/*.wav
 !assets/**/.gitkeep
